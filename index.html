@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Fathullah | Jasa Investasi Profesional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-primary: #007bff; /* Biru Profesional */
+            --color-secondary: #f4f4f9; /* Latar Belakang Bersih */
+            --color-text: #333;
+            --color-card: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--color-secondary);
+            color: var(--color-text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 123, 255, 0.8), rgba(0, 123, 255, 0.9)), url('path/to/invest_bg.jpg') center/cover;
+            color: white;
+            padding: 100px 50px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        /* Kalkulator Card */
+        .calculator-card {
+            background-color: var(--color-card);
+            color: var(--color-text);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 30px auto;
+            text-align: left;
+        }
+
+        .calculator-card label, .calculator-card input, .calculator-card button {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .calculator-card input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        /* Hasil PHP */
+        .php-output {
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
+            background-color: #e0f7fa; /* Warna latar untuk hasil dinamis */
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="navbar">
+        <div class="logo">
+            <a href="#">Fathullah Invest</a>
+        </div>
+        <nav>
+            <a href="#kalkulator">Kalkulator</a>
+            <a href="#proyek">Layanan</a>
+            <a href="#kontak">Kontak</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <h1>Maksimalkan Keuntungan Investasi Anda bersama Ahmad Fathullah</h1>
+            <p>Solusi investasi yang transparan, terpercaya, dan berbasis data.</p>
+        </section>
+
+        <section class="php-output">
+            <h2>Pesan Sambutan dari Server</h2>
+            <?php
+                // Logika PHP: Menentukan waktu sambutan berdasarkan jam server
+                date_default_timezone_set('Asia/Makassar'); 
+                $jam = date('H');
+                $nama = "Ahmad Fathullah";
+                
+                if ($jam >= 5 && $jam < 12) {
+                    $salam = "Selamat Pagi";
+                } elseif ($jam >= 12 && $jam < 18) {
+                    $salam = "Selamat Siang/Sore";
+                } else {
+                    $salam = "Selamat Malam";
+                }
+                
+                // PHP Mencetak data yang sudah diproses ke dalam HTML
+                echo "<h3>$salam! Selamat datang di Website Resmi $nama.</h3>";
+                echo "<p>Waktu server saat ini: " . date("H:i:s") . "</p>";
+            ?>
+        </section>
+        
+        <section id="kalkulator" style="text-align: center; padding: 40px 0;">
+            <h2>Kalkulator Proyeksi Keuntungan</h2>
+            <div class="calculator-card">
+                <label for="modal">Modal Awal (Rp):</label>
+                <input type="number" id="modal" value="1000000" min="1000">
+
+                <label for="bunga">Perkiraan Bunga Tahunan (%):</label>
+                <input type="number" id="bunga" value="10" min="0" max="100">
+
+                <label for="tahun">Durasi (Tahun):</label>
+                <input type="number" id="tahun" value="5" min="1" max="50">
+
+                <button onclick="hitungProyeksi()">Hitung Proyeksi</button>
+
+                <p style="font-weight: bold; margin-top: 20px;">Hasil Proyeksi:</p>
+                <p id="hasilProyeksi">Masukkan nilai untuk melihat hasilnya.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p style="text-align: center; padding: 20px; background-color: #222; color: white;">&copy; <?php echo date("Y"); ?> Ahmad Fathullah Jasa Investasi. Semua Hak Dilindungi.</p>
+    </footer>
+
+    <script>
+        // Fungsi JavaScript untuk menghitung Proyeksi Keuntungan
+        function hitungProyeksi() {
+            const modal = parseFloat(document.getElementById('modal').value);
+            const bunga = parseFloat(document.getElementById('bunga').value) / 100; // Ubah ke desimal
+            const tahun = parseInt(document.getElementById('tahun').value);
+            const hasilElement = document.getElementById('hasilProyeksi');
+
+            if (isNaN(modal) || isNaN(bunga) || isNaN(tahun) || modal <= 0 || tahun <= 0) {
+                hasilElement.textContent = "Mohon masukkan angka yang valid dan positif.";
+                return;
+            }
+
+            // Rumus Bunga Majemuk (Compound Interest): A = P * (1 + r)^t
+            const nilaiAkhir = modal * Math.pow((1 + bunga), tahun);
+            const totalKeuntungan = nilaiAkhir - modal;
+
+            // Format angka ke Rupiah
+            const formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            });
+
+            hasilElement.innerHTML = `
+                Nilai Akhir Investasi: <strong>${formatter.format(nilaiAkhir)}</strong><br>
+                Total Keuntungan: <strong>${formatter.format(totalKeuntungan)}</strong>
+            `;
+        }
+    </script>
+</body>
+</html>
